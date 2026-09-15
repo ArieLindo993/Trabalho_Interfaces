@@ -14,10 +14,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the customer registration', async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, Trabanho_Estrutura_Dados');
+    expect(compiled.querySelector('app-clientes-cadastrar')?.textContent).toContain('Cadastro de Cliente');
   });
 });

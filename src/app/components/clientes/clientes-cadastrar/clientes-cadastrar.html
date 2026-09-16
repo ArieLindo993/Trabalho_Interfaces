@@ -4,88 +4,100 @@
     subheader="Os dados cadastrados serão utilizados para compras e vendas"
     class="mt-4"
   >
-    <div class="row gx-3 gy-4 mt-0">
-      <div class="col-12 col-md-6">
-        <p-floatlabel>
-          <input pInputText id="nome" name="nome" type="text" /> <label for="nome">Nome: *</label>
-        </p-floatlabel>
+    <form [formGroup]="formularioCliente">
+      <div class="row gx-3 gy-4 mt-0">
+        <div class="col-12 col-md-6">
+          <p-floatlabel>
+            <input
+              pInputText
+              id="nome"
+              autocomplete="off"
+              formControlName="nome"
+              name="nome"
+              type="text"
+            />
+            <label for="nome">Nome: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <p-floatlabel>
+            <p-select
+              inputId="tipoPessoa" formControlName="tipoPessoa"
+              [options]="tipoPessoaOptions"
+              optionLabel="descricao"
+              optionValue="valor"
+            />
+            <label for="tipoPessoa">Tipo de Pessoa: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <p-floatlabel>
+            <p-inputmask
+              inputId="cpfCnpj"
+              name="cpfCnpj" formControlName="cpfCnpj"
+              [mask]="formularioCliente.get('tipoPessoa')?.value === 'PJ' ? '99.999.999/9999-99' : '999.999.999-99'"
+            />
+            <label for="cpfCnpj">Cpf/Cnpj: *</label>
+          </p-floatlabel>
+        </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <p-floatlabel>
-          <p-select
-            id="tipoPessoa"
-            [options]="tipoPessoaOptions"
-            optionLabel="descricao"
-            optionValue="valor"
-          />
-          <label for="tipoPessoa">Tipo de Pessoa: *</label>
-        </p-floatlabel>
+      <div class="row gx-3 gy-4 mt-0">
+        <div class="col-12 col-sm-7 col-md-8">
+          <p-floatlabel>
+            <input pInputText id="email" name="email" formControlName="email" type="email" />
+            <label for="email">Email: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-5 col-md-4">
+          <p-floatlabel>
+            <p-inputmask inputId="telefone" name="telefone" formControlName="telefone" mask="(99) 99999-9999" />
+            <label for="telefone">Telefone: *</label>
+          </p-floatlabel>
+        </div>
       </div>
-      <div class="col-12 col-sm-6 col-md-3">
-        <p-floatlabel>
-          <p-inputmask
-            inputId="cpfCnpj"
-            name="cpfCnpj"
-            [mask]="tipoPessoa === 'PJ' ? '99.999.999/9999-99' : '999.999.999-99'"
-          />
-          <label for="cpfCnpj">Cpf/Cnpj: *</label>
-        </p-floatlabel>
+      <div class="row gx-3 gy-4 mt-0">
+        <div class="col-12 col-md-3">
+          <p-floatlabel>
+            <p-inputmask inputId="cep" name="cep" formControlName="cep" mask="99999-999" />
+            <label for="cep">Cep: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-8 col-md-7">
+          <p-floatlabel>
+            <input pInputText id="logradouro" name="logradouro" formControlName="logradouro" type="text" />
+            <label for="logradouro">Logradouro: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-4 col-md-2">
+          <p-floatlabel>
+            <input pInputText id="numero" name="numero" formControlName="numero" type="text" />
+            <label for="numero">Número: *</label>
+          </p-floatlabel>
+        </div>
       </div>
-    </div>
-    <div class="row gx-3 gy-4 mt-0">
-      <div class="col-12 col-sm-7 col-md-8">
-        <p-floatlabel>
-          <input pInputText id="email" name="email" type="email" />
-          <label for="email">Email: *</label>
-        </p-floatlabel>
+      <div class="row gx-3 gy-4 mt-0">
+        <div class="col-12 col-sm-6">
+          <p-floatlabel>
+            <input pInputText id="bairro" name="bairro" formControlName="bairro" type="text" />
+            <label for="bairro">Bairro: *</label>
+          </p-floatlabel>
+        </div>
+        <div class="col-12 col-sm-6">
+          <p-floatlabel>
+            <input pInputText id="cidade" name="cidade" formControlName="cidade" type="text" />
+            <label for="cidade">Cidade: *</label>
+          </p-floatlabel>
+        </div>
       </div>
-      <div class="col-12 col-sm-5 col-md-4">
-        <p-floatlabel>
-          <p-inputmask inputId="telefone" name="telefone" mask="(99) 99999-9999" />
-          <label for="telefone">Telefone: *</label>
-        </p-floatlabel>
+      <div class="row gx-3 gy-4 mt-0">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+          <p-button label="Salvar" icon="pi pi-save" severity="success" type="button" />
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-2">
+          <p-button label="Cancelar" icon="pi pi-times" severity="danger" type="button" />
+        </div>
       </div>
-    </div>
-    <div class="row gx-3 gy-4 mt-0">
-      <div class="col-12 col-md-3">
-        <p-floatlabel>
-          <p-inputmask inputId="cep" name="cep" mask="99999-999" /> <label for="cep">Cep: *</label>
-        </p-floatlabel>
-      </div>
-      <div class="col-12 col-sm-8 col-md-7">
-        <p-floatlabel>
-          <input pInputText id="logradouro" name="logradouro" type="text" />
-          <label for="logradouro">Logradouro: *</label>
-        </p-floatlabel>
-      </div>
-      <div class="col-12 col-sm-4 col-md-2">
-        <p-floatlabel>
-          <input pInputText id="numero" name="numero" type="text" />
-          <label for="numero">Número: *</label>
-        </p-floatlabel>
-      </div>
-    </div>
-    <div class="row gx-3 gy-4 mt-0">
-      <div class="col-12 col-sm-6">
-        <p-floatlabel>
-          <input pInputText id="bairro" name="bairro" type="text" />
-          <label for="bairro">Bairro: *</label>
-        </p-floatlabel>
-      </div>
-      <div class="col-12 col-sm-6">
-        <p-floatlabel>
-          <input pInputText id="cidade" name="cidade" type="text" />
-          <label for="cidade">Cidade: *</label>
-        </p-floatlabel>
-      </div>
-    </div>
-    <div class="row gx-3 gy-4 mt-0">
-      <div class="col-12 col-sm-6 col-md-3 col-lg-2">
-        <p-button label="Salvar" icon="pi pi-save" severity="success" type="button" />
-      </div>
-      <div class="col-12 col-sm-6 col-md-3 col-lg-2">
-        <p-button label="Cancelar" icon="pi pi-times" severity="danger" type="button" />
-      </div>
-    </div>
+    </form>
   </p-card>
 </div>
+

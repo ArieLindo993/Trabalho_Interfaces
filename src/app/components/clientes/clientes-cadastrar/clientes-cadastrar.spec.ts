@@ -1,3 +1,5 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClientesCadastrar } from './clientes-cadastrar';
 
@@ -7,6 +9,7 @@ describe('ClientesCadastrar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()],
       imports: [ClientesCadastrar],
     }).compileComponents();
 
@@ -19,3 +22,4 @@ describe('ClientesCadastrar', () => {
     expect(component).toBeTruthy();
   });
 });
+

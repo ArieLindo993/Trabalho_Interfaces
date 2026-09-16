@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CardModule } from 'primeng/card';
+import { ClientesService } from './../../clientes-service';
+import { Component, inject, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputMaskModule } from 'primeng/inputmask';
+import { CardModule } from 'primeng/card';
 import { SelectModule } from 'primeng/select';
-import { ButtonModule } from 'primeng/button';
+import { InputMaskModule } from 'primeng/inputmask';
+import { ButtonDirective } from 'primeng/button';
+import { Save } from '@primeicons/angular/save';
+import { Times } from '@primeicons/angular/times';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-clientes-cadastrar',
   imports: [
-    ReactiveFormsModule,
-    CardModule,
-    ButtonModule,
     InputTextModule,
     FloatLabelModule,
+    CardModule,
     SelectModule,
     InputMaskModule,
+    ButtonDirective,
+    Save,
+    Times,
+    ReactiveFormsModule
   ],
   styleUrl: './clientes-cadastrar.css',
   templateUrl: './clientes-cadastrar.html',
@@ -33,13 +38,15 @@ export class ClientesCadastrar {
     { descricao: 'Pessoa Jurídica', valor: 'PJ' },
   ];
 
-  constructor( private readonly criadorFormulario: FormBuilder) {}
+  private readonly ClientesService = inject(ClientesService);
 
-  ngOnInit(): void{
+  constructor(private readonly criadorFormulario: FormBuilder) { }
+
+  ngOnInit(): void {
     this.criarFormularioCliente();
   }
 
-  criarFormularioCliente(){
+  criarFormularioCliente() {
     this.formularioCliente = this.criadorFormulario.group({
       nome: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       tipoPessoa: ['PF', Validators.required],
@@ -49,8 +56,29 @@ export class ClientesCadastrar {
       logradouro: ['', Validators.required],
       numero: ['', Validators.required],
       bairro: ['', Validators.required],
-      cep: ['', Validators.required],
-      cidade: ['', Validators.required]
+      cep: ['', Validators.required]
     })
+  }
+
+  salvarCliente() {
+    this.formularioCliente.markAllAsTouched();
+    if(this.formularioCliente.invalid) {
+      console.log('Formulário inválido!');
+    } else {
+      console.log('-----------------------Objeto em JavaScript');
+      console.log(this.formularioCliente.value);
+      console.log('-----------------------Objeto em JSON');
+      console.log(JSON.stringify(this.formularioCliente.value));
+      this.ClientesService.SalvarCliente(this.formularioCliente.value)
+        .subscribe({
+          next: (resposta:any) => {
+            console.log("Cliente salvo com sucesso!");
+            console.log(resposta);
+          },
+          error: (erroRetornado:any) => {
+            console.error("Erro ao salvar cliente: ", erroRetornado);
+          }
+        })
+    }
   }
 }
